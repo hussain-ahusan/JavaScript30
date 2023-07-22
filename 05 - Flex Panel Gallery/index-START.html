@@ -26,9 +26,12 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
     }
 
     .panel {
+      display: flex;
+      flex-direction: column;
       background: #6B0F9C;
       box-shadow: inset 0 0 0 5px rgba(255,255,255,0.1);
       color: white;
@@ -43,6 +46,9 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
     }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
@@ -53,10 +59,19 @@
 
     /* Flex Children */
     .panel > * {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+      flex: 1 0 auto;
     }
+
+    .panel > *:first-child {transform: translateY(-100%);}
+    .panel.open-active > *:first-child {transform: translateY(0);}
+    .panel > *:last-child {transform: translateY(100%);}
+    .panel.panel.open-active > *:last-child {transform: translateY(0);}
 
     .panel p {
       text-transform: uppercase;
@@ -70,6 +85,7 @@
     }
 
     .panel.open {
+      flex: 5;
       font-size: 40px;
     }
 
@@ -105,7 +121,21 @@
   </div>
 
   <script>
+    const panels = document.querySelectorAll(".panel");
 
+    function toggleOpen(e) {
+      this.classList.toggle("open");
+    }
+
+    function toggleOpenActive(e) {
+      //if statement used to look for flex grow only when adding class.
+      if (e.propertyName.includes("flex")) { //for browser compatibility. Normally, check for flex-grow
+        this.classList.toggle("open-active");
+      }
+    }
+
+    panels.forEach(panel => panel.addEventListener("click", toggleOpen));
+    panels.forEach(panel => panel.addEventListener("transitionend", toggleOpenActive));
   </script>
 
 
