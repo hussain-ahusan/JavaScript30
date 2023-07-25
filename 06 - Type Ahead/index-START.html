@@ -28,7 +28,7 @@ function findMatches (wordToMatch, cities){
     //figure out if search keyword matches city or state
     //regex constant to take in the search keyword, case insensitive (i) and global flag (g) included.
     const regex = new RegExp(wordToMatch, "gi")
-    //return the result of the search keyword and match for state and city
+    //return the result of the search keyword and check for  a match for state and city
     return place.city.match(regex) || place.state.match(regex);
 
   });
